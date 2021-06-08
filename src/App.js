@@ -5,6 +5,7 @@ import { ReactComponent as DayCloudyIcon } from './images/day-cloudy.svg';
 import { ReactComponent as RainIcon } from './images/rain.svg';
 import { ReactComponent as AirFlowIcon } from './images/airFlow.svg';
 import { ReactComponent as RefreshIcon } from './images/refresh.svg';
+import dayjs from 'dayjs';
 
 const theme = {
   light: {
@@ -122,28 +123,45 @@ const DayCloudy = styled(DayCloudyIcon)`
 `;
 
 function App() {
+  // define theme state
   const [currentTheme, setCurrentTHeme] = useState('light');
+
+  // define wrather data state
+  const [currentWeather, setCurrentWeather] = useState({
+    locationName: '臺北市',
+    description: '多雲時晴',
+    windSpeed: 1.1,
+    temperature: 22.9,
+    rainPossibility: 48.3,
+    observationTime: '2020-12-12 22:10:00',
+  });
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>
       <Container>
         <WeatherCard>
-        <Location>台北市</Location>
-          <Description>多雲時晴</Description>
+        <Location>{currentWeather.locationName}</Location>
+          <Description>{currentWeather.description}</Description>
           <CurrentWeather>
             <Temperature>
-              23 <Celsius>°C</Celsius>
+              {Math.round(currentWeather.temperature)} <Celsius>°C</Celsius>
             </Temperature>
             <DayCloudy />
           </CurrentWeather>
           <AirFlow>
-            <AirFlowIcon /> 23 m/h
+            <AirFlowIcon /> {currentWeather.windSpeed} m/h
           </AirFlow>
           <Rain>
-            <RainIcon /> 48%
+            <RainIcon /> {currentWeather.rainPossibility}%
           </Rain>
           <Refresh>
-            最後觀測時間：上午 12:03 <RefreshIcon /> 
+            最後觀測時間：
+            {new Intl.DateTimeFormat('zh-TW', {
+              hour: 'numeric',
+              minute: 'numeric',
+            }).format(dayjs(currentWeather.observationTime))}
+            {' '}
+            <RefreshIcon /> 
           </Refresh>
         </WeatherCard>
       </Container>
