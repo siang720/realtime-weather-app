@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { ReactComponent as DayCloudyIcon } from './images/day-cloudy.svg';
@@ -122,8 +122,10 @@ const DayCloudy = styled(DayCloudyIcon)`
 `;
 
 function App() {
+  const [currentTheme, setCurrentTHeme] = useState('light');
+
   return (
-    <ThemeProvider theme={theme.dark}>
+    <ThemeProvider theme={theme[currentTheme]}>
       <Container>
         <WeatherCard>
         <Location>台北市</Location>
