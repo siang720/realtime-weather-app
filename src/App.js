@@ -122,6 +122,10 @@ const DayCloudy = styled(DayCloudyIcon)`
   flex-baisi: 30%;
 `;
 
+const AUTHORIZATION_KEY = 'CWB-FB1A339B-AF21-4817-9158-84F54CB39FCF';
+const LOCATION_NAME = '臺北';
+
+
 function App() {
   // define theme state
   const [currentTheme, setCurrentTHeme] = useState('light');
@@ -135,6 +139,33 @@ function App() {
     rainPossibility: 48.3,
     observationTime: '2020-12-12 22:10:00',
   });
+
+  // define refresh function
+  const handleClick = () => {
+    fetch(
+      `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${AUTHORIZATION_KEY}&locationName=${LOCATION_NAME}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        const locationData = data.records.location[0];
+        const weatherElements = locationData.weatherElement.reduce(
+          (neededElements, item) => {
+            if (['WDSD', 'TEMP'].includes(item.elementName)) {
+              neededElements[item.elementName] = item.elementValue
+            }
+            return neededElements
+          }, {}
+        )
+        setCurrentWeather({
+          observationTime: locationData.time.obsTime,
+          locationName: locationData.locationName,
+          temperature: weatherElements.TEMP,
+          windSpeed: weatherElements.WDSD,
+          description: '多雲時晴',
+          rainPossibility: 60,
+        })
+      });
+  };
 
   return (
     <ThemeProvider theme={theme[currentTheme]}>
@@ -161,7 +192,7 @@ function App() {
               minute: 'numeric',
             }).format(dayjs(currentWeather.observationTime))}
             {' '}
-            <RefreshIcon /> 
+            <RefreshIcon onClick={handleClick} /> 
           </Refresh>
         </WeatherCard>
       </Container>
