@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { ReactComponent as DayCloudyIcon } from './images/day-cloudy.svg';
@@ -127,6 +127,7 @@ const LOCATION_NAME = '臺北';
 
 
 function App() {
+  console.log('invoke function component')
   // define theme state
   const [currentTheme, setCurrentTHeme] = useState('light');
 
@@ -140,8 +141,13 @@ function App() {
     observationTime: '2020-12-12 22:10:00',
   });
 
+  useEffect(() => {
+    console.log('execute function in useEffect')
+    fetchCurrentWeather();
+  }, []);
+
   // define refresh function
-  const handleClick = () => {
+  const fetchCurrentWeather = () => {
     fetch(
       `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${AUTHORIZATION_KEY}&locationName=${LOCATION_NAME}`
     )
@@ -170,6 +176,7 @@ function App() {
   return (
     <ThemeProvider theme={theme[currentTheme]}>
       <Container>
+        {console.log('render')}
         <WeatherCard>
         <Location>{currentWeather.locationName}</Location>
           <Description>{currentWeather.description}</Description>
@@ -192,7 +199,7 @@ function App() {
               minute: 'numeric',
             }).format(dayjs(currentWeather.observationTime))}
             {' '}
-            <RefreshIcon onClick={handleClick} /> 
+            <RefreshIcon onClick={fetchCurrentWeather} /> 
           </Refresh>
         </WeatherCard>
       </Container>
