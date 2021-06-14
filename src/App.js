@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback } from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { ReactComponent as DayCloudyIcon } from './images/day-cloudy.svg';
@@ -205,20 +205,20 @@ function App() {
     isLoading: true,
   });
 
-  useEffect(() => {
-    console.log('-- execute function in useEffect --');
+  const fetchData = async () => {
     setWeatherElement((prevState) => ({
       ...prevState,
       isLoading: true
     }));
-    const fetchData = async () => {
-      const [currentWeather, weatherForecast] = await Promise.all([fetchCurrentWeather(),fetchWeatherForecast()]);
-      setWeatherElement({
-        ...currentWeather,
-        ...weatherForecast,
-        isLoading: false,
-      });
-    }
+    const [currentWeather, weatherForecast] = await Promise.all([fetchCurrentWeather(),fetchWeatherForecast()]);
+    setWeatherElement({
+      ...currentWeather,
+      ...weatherForecast,
+      isLoading: false,
+    });
+  };
+
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -253,10 +253,7 @@ function App() {
             <RainIcon /> {rainPossibility}%
           </Rain>
           <Refresh 
-            onClick={() => {
-              fetchCurrentWeather();
-              fetchWeatherForecast();
-            }}
+            onClick={fetchData}
             isLoading={isLoading}
           >
             最後觀測時間：
