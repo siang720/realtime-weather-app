@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useCallback } from 'react';
+import React, {useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
-import { ReactComponent as DayCloudyIcon } from './images/day-cloudy.svg';
+import WeatherIcon from './components/WeatherIcon';
 import { ReactComponent as RainIcon } from './images/rain.svg';
 import { ReactComponent as AirFlowIcon } from './images/airFlow.svg';
 import { ReactComponent as RefreshIcon } from './images/refresh.svg';
@@ -129,10 +129,6 @@ const Refresh = styled.div`
   }
 `;
 
-const DayCloudy = styled(DayCloudyIcon)`
-  flex-baisi: 30%;
-`;
-
 const AUTHORIZATION_KEY = 'CWB-FB1A339B-AF21-4817-9158-84F54CB39FCF';
 const LOCATION_NAME = '臺北';
 const LOCATION_NAME_FORECAST = '臺北市';
@@ -244,7 +240,7 @@ function App() {
             <Temperature>
               {Math.round(temperature)} <Celsius>°C</Celsius>
             </Temperature>
-            <DayCloudy />
+            <WeatherIcon />
           </CurrentWeather>
           <AirFlow>
             <AirFlowIcon /> {windSpeed} m/h
