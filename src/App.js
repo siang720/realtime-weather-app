@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react';
+import React, {useState, useEffect, useMemo } from 'react';
 import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import WeatherIcon from './components/WeatherIcon';
@@ -7,6 +7,7 @@ import { ReactComponent as AirFlowIcon } from './images/airFlow.svg';
 import { ReactComponent as RefreshIcon } from './images/refresh.svg';
 import { ReactComponent as LoadingIcon } from './images/loading.svg';
 import dayjs from 'dayjs';
+import { getMoment } from './utils/helpers';
 
 const theme = {
   light: {
@@ -187,7 +188,7 @@ function App() {
   console.log('-- invoke function component --');
   // define theme state
   const [currentTheme, setCurrentTheme] = useState('light');
-
+  const moment = useMemo(() => getMoment(LOCATION_NAME_FORECAST), []);
   // define wrather data state
   const [weatherElement, setWeatherElement] = useState({
     observationTime: new Date(),
@@ -216,7 +217,8 @@ function App() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+    setCurrentTheme(moment === 'day' ? 'light' : 'dark');
+  }, [moment]);
 
   const {
     observationTime,
@@ -241,7 +243,7 @@ function App() {
             <Temperature>
               {Math.round(temperature)} <Celsius>°C</Celsius>
             </Temperature>
-            <WeatherIcon weatherCode={weatherCode} moment="night" />
+            <WeatherIcon weatherCode={weatherCode} moment={moment} />
           </CurrentWeather>
           <AirFlow>
             <AirFlowIcon /> {windSpeed} m/h
