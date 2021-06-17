@@ -175,7 +175,7 @@ const fetchWeatherForecast = () => {
       );
       return {
         description: weatherElements.Wx.parameterName,
-        weatherCode: weatherElements.Wx.parameterName,
+        weatherCode: weatherElements.Wx.parameterValue,
         rainPossibility: weatherElements.PoP.parameterName,
         comfortability: weatherElements.CI.parameterName,
       };
@@ -226,7 +226,8 @@ function App() {
     description,
     rainPossibility,
     comfortability,
-    isLoading
+    isLoading,
+    weatherCode
   } = weatherElement;
 
   return (
@@ -240,7 +241,7 @@ function App() {
             <Temperature>
               {Math.round(temperature)} <Celsius>°C</Celsius>
             </Temperature>
-            <WeatherIcon />
+            <WeatherIcon weatherCode={weatherCode} moment="night" />
           </CurrentWeather>
           <AirFlow>
             <AirFlowIcon /> {windSpeed} m/h
