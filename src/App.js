@@ -40,6 +40,9 @@ const LOCATION_NAME_FORECAST = '臺北市';
 
 function App() {
   const [ currentPage, setCurrentPage ] = useState('WeatherCard')
+  const handleCurrentPage = (currentPage) => {
+    setCurrentPage(currentPage)
+  };
 
   const [weatherElement, fetchData ] = useWeatherAPI({
     locationName: LOCATION_NAME,
@@ -62,9 +65,10 @@ function App() {
           weatherElement={weatherElement}
           moment={moment}
           fetchData={fetchData}
+          handleCurrentPage={handleCurrentPage}
         />
         )}
-        {currentPage === 'WeatherSetting' && <WeatherSetting /> }
+        {currentPage === 'WeatherSetting' && <WeatherSetting handleCurrentPage={handleCurrentPage}/> }
       </Container>
     </ThemeProvider>
   )

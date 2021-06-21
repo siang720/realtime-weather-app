@@ -94,7 +94,7 @@ const Save = styled.button`
   }
 `;
 
-const WeatherSetting = () => {
+const WeatherSetting = ({handleCurrentPage}) => {
     return (
       <WeatherSettingWrapper>
         <Title>設定</Title>
@@ -109,7 +109,7 @@ const WeatherSetting = () => {
         </StyledSelect>
   
         <ButtonGroup>
-          <Back>返回</Back>
+          <Back onClick={() => handleCurrentPage('WeatherCard')}>返回</Back>
           <Save>儲存</Save>
         </ButtonGroup>
       </WeatherSettingWrapper>
