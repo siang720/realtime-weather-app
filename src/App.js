@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { ThemeProvider } from '@emotion/react';
 import { getMoment } from './utils/helpers';
 import WeatherCard from './views/WeatherCard';
+import useWeatherAPI from './hooks/useWeatherAPI';
 
 const theme = {
   light: {
@@ -36,89 +37,18 @@ const AUTHORIZATION_KEY = 'CWB-FB1A339B-AF21-4817-9158-84F54CB39FCF';
 const LOCATION_NAME = '臺北';
 const LOCATION_NAME_FORECAST = '臺北市';
 
-const fetchCurrentWeather = () => {
-  return fetch(
-    `https://opendata.cwb.gov.tw/api/v1/rest/datastore/O-A0003-001?Authorization=${AUTHORIZATION_KEY}&locationName=${LOCATION_NAME}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const locationData = data.records.location[0];
-      const weatherElements = locationData.weatherElement.reduce(
-        (neededElements, item) => {
-          if (['WDSD', 'TEMP'].includes(item.elementName)) {
-            neededElements[item.elementName] = item.elementValue
-          }
-          return neededElements
-        }, {}
-      )
-      return {
-        observationTime: locationData.time.obsTime,
-        locationName: locationData.locationName,
-        temperature: weatherElements.TEMP,
-        windSpeed: weatherElements.WDSD
-      };
-    });
-};
-
-const fetchWeatherForecast = () => {
-  return fetch(
-    `https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=${AUTHORIZATION_KEY}&locationName=${LOCATION_NAME_FORECAST}`
-  )
-    .then((response) => response.json())
-    .then((data) => {
-      const locationData = data.records.location[0];
-      const weatherElements = locationData.weatherElement.reduce(
-        (neededElements, item) => {
-          if (['Wx', 'PoP', 'CI'].includes(item.elementName)) {
-            neededElements[item.elementName] = item.time[0].parameter;
-          }
-          return neededElements;
-        },
-        {}
-      );
-      return {
-        description: weatherElements.Wx.parameterName,
-        weatherCode: weatherElements.Wx.parameterValue,
-        rainPossibility: weatherElements.PoP.parameterName,
-        comfortability: weatherElements.CI.parameterName,
-      };
-    });
-};
-
-
 function App() {
-  console.log('-- invoke function component --');
+  const [weatherElement, fetchData ] = useWeatherAPI({
+    locationName: LOCATION_NAME,
+    cityName: LOCATION_NAME_FORECAST,
+    authorization_key: AUTHORIZATION_KEY,
+  });
+
   // define theme state
   const [currentTheme, setCurrentTheme] = useState('light');
   const moment = useMemo(() => getMoment(LOCATION_NAME_FORECAST), []);
-  // define wrather data state
-  const [weatherElement, setWeatherElement] = useState({
-    observationTime: new Date(),
-    locationName: '',
-    temperature: 0,
-    windSpeed: 0,
-    description: '',
-    weatherCode: 0,
-    rainPossibility: 0,    
-    comfortability: '',
-    isLoading: true,
-  });
-
-  const fetchData = async () => {
-    setWeatherElement((prevState) => ({
-      ...prevState,
-      isLoading: true
-    }));
-    const [currentWeather, weatherForecast] = await Promise.all([fetchCurrentWeather(),fetchWeatherForecast()]);
-    setWeatherElement({
-      ...currentWeather,
-      ...weatherForecast,
-      isLoading: false,
-    });
-  };
-
+  
   useEffect(() => {
-    fetchData();
     setCurrentTheme(moment === 'day' ? 'light' : 'dark');
   }, [moment]);
 
