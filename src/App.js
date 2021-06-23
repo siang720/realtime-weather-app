@@ -37,7 +37,8 @@ const Container = styled.div`
 const AUTHORIZATION_KEY = 'CWB-FB1A339B-AF21-4817-9158-84F54CB39FCF';
 
 function App() {
-  const [ currentCity, setCurrentCity ] = useState('臺北市');
+  const storageCity = localStorage.getItem('cityName') || '臺北市';
+  const [ currentCity, setCurrentCity ] = useState(storageCity);
   const currentLocation = useMemo(() => findLocation(currentCity), [currentCity]);
   const { cityName, locationName, sunriseCityName } = currentLocation;
   const handleCurrentCityChange = (currentCity) => {
