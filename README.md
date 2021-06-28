@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# 【從 Hooks 開始，讓網頁 React 起來】台灣好天氣 - 臺灣即時天氣 App 🇹🇼
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## create-react-app 更新異動
 
-## Available Scripts
+create-react-app 在 v4 版本的 API 有變更，建立專案時請以下述指令執行，才會開啟 Progressive Web App 的功能：
 
-In the project directory, you can run:
+```bash
+# <my-app> 請換成專案想取的名稱
+npx create-react-app <my-app> --template cra-template-pwa
+```
 
-### `npm start`
+進一步的說明請參考 [CRA 建立專案方式異動](https://pjchender.github.io/react-bootcamp/docs/book)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## emotion 更新異動
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+在 emotion 11 中，將原本的套件名稱從 `@emotion/core` 改為 `@emotion/react`，並將 `emotion-theming` 這個套件整併到 `@emotion/react` 內。因此在安裝 emotion 時，可將指令修改為：
 
-### `npm test`
+```bash
+# 安裝 emotion11
+npm install @emotion/react @emotion/styled
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+進一步的說明請參考 [emotion 安裝方式異動](https://pjchender.github.io/react-bootcamp/docs/book/errata/emotion)
 
-### `npm run build`
+## 補充連結
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 學習 React 前可以閱讀
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [JavaScript to Know for React](https://kentcdodds.com/blog/javascript-to-know-for-react)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### React 相關
 
-### `npm run eject`
+- [React](https://reactjs.org/docs/getting-started.html) @ React
+- [Codecademy Learn React.js](https://www.codecademy.com/learn/react-101)
+- [React Router](https://reactrouter.com/)
+- [Redux](https://redux.js.org/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Styled Components 相關
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [The magic behind 💅 styled-components](https://mxstbr.blog/2016/11/styled-components-magic-explained/)：說明 styled component 如何使用 template literal 中的 tagged template 方式，來取得元件中 props 的值
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### 部署屬相關
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [Git 安裝教學](https://git-scm.com/book/zh-tw/v2/%E9%96%8B%E5%A7%8B-Git-%E5%AE%89%E8%A3%9D%E6%95%99%E5%AD%B8) @ Git
+- [Github Page](https://pages.github.com/) @ Github
 
-## Learn More
+### 其他
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API) @ MDN
+- [Progressive Web Apps](https://web.dev/progressive-web-apps/) @ Web.dev
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 版權宣告
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- 台灣好天氣的設計畫面主要參考 imgur 上的圖片 ([https://imgur.com/ZLgiOyj](https://imgur.com/ZLgiOyj))
+- 天氣圖示來自 IconFinder 上 The Weather is Nice Today 所提天（[https://www.iconfinder.com/iconsets/the-weather-is-nice-today](https://www.iconfinder.com/iconsets/the-weather-is-nice-today)）
